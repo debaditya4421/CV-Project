@@ -118,7 +118,7 @@ while g==5 :
 
     if ct==0:
         g=10
-print("hibro")
+
 print(per[a][b])
 print(per[c][d])
 z=30
@@ -198,7 +198,7 @@ def path(x,y):
         #cv2.waitKey(100)
         if (c == a1) and (d == b1):
             z=15
-m11=0
+
 while z==30 :
 
     path(c, d)
