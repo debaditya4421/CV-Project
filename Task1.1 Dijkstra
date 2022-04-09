@@ -119,20 +119,23 @@ while g==5 :
     if ct==0:
         g=10
 
-print(per[a][b])
-print(per[c][d])
+# print(per[a][b])
+# print(per[c][d])
 z=30
-
+#print(per)
 img[c1][d1]=127
+cv2.namedWindow('NewImage', cv2.WINDOW_NORMAL)
 def path(x,y):
     global z
+    global c
+    global d
     if (x > 0) and (img[x - 1][y] == 255) and (2+ per[x - 1][y] == per[x][y]):
         img[x - 1][y] = 127
         c=x-1
         d=y
 
-        # cv2.imshow('NewImage', img)
-        # cv2.waitKey(100)
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
         if (c == a1) and (d == b1):
             z=15
     elif (y > 0) and (img[x][y - 1] == 255) and (2+ per[x][y - 1] == per[x][y]):
@@ -140,8 +143,8 @@ def path(x,y):
         c=x
         d=y-1
 
-        # cv2.imshow('NewImage', img)
-        # cv2.waitKey(100)
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
         if (c == a1) and (d == b1):
             z=15
     elif (x + 1 < n) and (img[x + 1][y] == 255) and (2 + per[x + 1][y] == per[x][y]):
@@ -149,8 +152,8 @@ def path(x,y):
         c = x + 1
         d = y
 
-        # cv2.imshow('NewImage', img)
-        # cv2.waitKey(100)
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
         if (c == a1) and (d == b1):
             z=15
     elif (y + 1 < m) and (img[x][y + 1] == 255) and (2 + per[x][y + 1] == per[x][y]):
@@ -158,8 +161,8 @@ def path(x,y):
         c = x
         d = y+1
 
-        # cv2.imshow('NewImage', img)
-        # cv2.waitKey(100)
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
         if (c == a1) and (d == b1):
             z=15
     elif (y + 1 < m) and (x+1<n) and (img[x+1][y + 1] == 255) and (1 + per[x+1][y + 1]==per[x][y]):
@@ -167,8 +170,8 @@ def path(x,y):
         c = x+1
         d = y+1
 
-        # cv2.imshow('NewImage', img)
-        # cv2.waitKey(100)
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
         if (c == a1) and (d == b1):
             z=15
     elif (y + 1 < m) and (x>0) and (img[x-1][y + 1] == 255) and (1 + per[x-1][y + 1]==per[x][y]):
@@ -176,8 +179,8 @@ def path(x,y):
         c = x-1
         d = y+1
 
-        # cv2.imshow('NewImage', img)
-        # cv2.waitKey(100)
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
         if (c == a1) and (d == b1):
             z=15
     elif (y > 0) and (x>0) and (img[x-1][y - 1] == 255) and (1 + per[x-1][y - 1]==per[x][y]):
@@ -185,8 +188,8 @@ def path(x,y):
         c = x-1
         d = y-1
 
-        #cv2.imshow('NewImage', img)
-        #cv2.waitKey(100)
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
         if (c == a1) and (d == b1):
             z=15
     elif (x + 1 < n) and (y>0) and (img[x+1][y - 1] == 255) and (1 + per[x+1][y - 1]==per[x][y]):
@@ -194,15 +197,14 @@ def path(x,y):
         c = x+1
         d = y-1
 
-        #cv2.imshow('NewImage', img)
-        #cv2.waitKey(100)
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
         if (c == a1) and (d == b1):
             z=15
 
 while z==30 :
-
     path(c, d)
-cv2.namedWindow('NewImage', cv2.WINDOW_NORMAL)
-cv2.imshow('NewImage', img)
+
+#cv2.imshow('NewImage', img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
