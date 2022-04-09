@@ -1,9 +1,11 @@
 import numpy as np
 import cv2
+import time
 
 #MAZE TRAVERSAL USING BFS ALGORITHM
 
 #firstly, we generate a random maze
+begin = time.time() #start time
 prob=np.random.randint(20,31)
 img=np.full((20,20),255).astype(np.uint8)
 count=0
@@ -18,7 +20,7 @@ img=cv2.resize(src=img,dsize=(60,60),interpolation=cv2.INTER_AREA)
 n=0
 pos1 = [] #stores row number for starting and ending point
 pos2 = [] #stores column number for starting and ending point
-while ( n < 2 ):
+while ( n < 2 ): #for generating random starting and ending point
     i=np.random.randint(0,60)
     j=np.random.randint(0,60)
     if (img[i,j]==255):    #checking for a white pixel
@@ -37,9 +39,9 @@ cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
 cv2.imshow('Image', img)
 img[a][b] = 255
 img[c][d] = 255
-img1 = np.full((n, m), 0) #stores step values for the required path
+img1 = np.full((n, m), 0) #stores step values for the required path as 1,2,3 .. so on
 
-img1[a][b] = 1
+img1[a][b] = 1 #first step is 1
 add = 5
 d1 = 25
 
@@ -139,6 +141,7 @@ def path1(r,s,p):
 while p>1:
     path1(c,d,p)
     p = p-1 #when step number 1 is reached, we get the entire shortest path
-
+end = time.time() #end time
+print(end - begin)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
