@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import time
 
 #BFS MAZE ALGO
 prob=np.random.randint(20,31)
@@ -47,7 +48,6 @@ def astar(i,j):
             path1.append(i)
             path2.append(j)
             cv2.imshow('Image', img)
-            cv2.waitKey(100)
             if(i-1)>=0:
                 if((i-1,j)==(c,d)):
                     print("complete")
@@ -165,14 +165,16 @@ def astar(i,j):
     
     else:
         print("final complete")
-        
+begin=time.time()        
 astar(a,b)
+end=time.time()
+print("time=", end-begin)
 l=len(path1)
 print("distance=", l)
 for k in range(l-3):
     img[path1.pop(),path2.pop()]=200
     cv2.imshow('Image', img)
-    cv2.waitKey(50)
+    cv2.waitKey(10)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows
