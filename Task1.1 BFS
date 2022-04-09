@@ -56,6 +56,14 @@ def step(k):
                     img1[i + 1][j] = k + 1
                 if (j + 1 < m) and (img1[i][j + 1] == 0) and (img[i][j + 1] == 255):
                     img1[i][j + 1] = k + 1
+                if (i + 1 < n) and (j + 1 < m) and (img1[i + 1][j+1] == 0) and (img[i + 1][j + 1] == 255):
+                    img1[i + 1][j + 1] = k+1
+                if (i + 1 < n) and (j > 0) and (img1[i + 1][j-1] == 0) and (img[i + 1][j - 1] == 255):
+                    img1[i + 1][j - 1] = k+1
+                if (j + 1 < m) and (i > 0) and (img1[i - 1][j+1] == 0) and (img[i - 1][j + 1] == 255):
+                    img1[i - 1][j + 1] = k+1
+                if (i > 0) and (j > 0) and (img1[i - 1][j-1] == 0) and (img[i - 1][j - 1] == 255):
+                    img1[i - 1][j - 1] = k+1
     if d1 == 25:
         global add
         add = 10
@@ -96,6 +104,30 @@ def path1(r,s,p):
         img[r][s + 1] = 127
         c = r
         d = s+1
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
+    elif (r + 1 < n) and (s+1<m) and (img1[r + 1][s+1] == p - 1):
+        img[r + 1][s+1] = 127
+        c = r + 1
+        d = s+1
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
+    elif (r + 1 < n) and (s>0) and (img1[r + 1][s-1] == p - 1):
+        img[r + 1][s-1] = 127
+        c = r + 1
+        d = s-1
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
+    elif (r > 0) and (s+1<m) and (img1[r - 1][s+1] == p - 1):
+        img[r - 1][s+1] = 127
+        c = r - 1
+        d = s+1
+        cv2.imshow('NewImage', img)
+        cv2.waitKey(100)
+    elif (r > 0) and (s>0) and (img1[r - 1][s-1] == p - 1):
+        img[r - 1][s-1] = 127
+        c = r - 1
+        d = s-1
         cv2.imshow('NewImage', img)
         cv2.waitKey(100)
 while p>1:
