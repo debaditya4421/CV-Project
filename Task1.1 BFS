@@ -1,8 +1,9 @@
-#write your code here
 import numpy as np
 import cv2
 
-#BFS MAZE ALGO
+#MAZE TRAVERSAL USING BFS ALGORITHM
+
+#firstly, we generate a random maze
 prob=np.random.randint(20,31)
 img=np.full((20,20),255).astype(np.uint8)
 count=0
@@ -15,8 +16,8 @@ while(count<4*prob):
 
 img=cv2.resize(src=img,dsize=(60,60),interpolation=cv2.INTER_AREA)
 n=0
-pos1 = []
-pos2 = []
+pos1 = [] #stores row number for starting and ending point
+pos2 = [] #stores column number for starting and ending point
 while ( n < 2 ):
     i=np.random.randint(0,60)
     j=np.random.randint(0,60)
@@ -30,12 +31,14 @@ a = pos1[0]
 b = pos2[0]
 c = pos1[1]
 d = pos2[1]
+# start : a,b
+# end : c,d
 cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
 cv2.imshow('Image', img)
 img[a][b] = 255
 img[c][d] = 255
-img1 = np.full((n, m), 0)
-#img2 = np.full((n, m), 255)
+img1 = np.full((n, m), 0) #stores step values for the required path
+
 img1[a][b] = 1
 add = 5
 d1 = 25
@@ -64,20 +67,22 @@ def step(k):
                     img1[i - 1][j + 1] = k+1
                 if (i > 0) and (j > 0) and (img1[i - 1][j-1] == 0) and (img[i - 1][j - 1] == 255):
                     img1[i - 1][j - 1] = k+1
+#checking all the 8 neighbours/children and if path(untraversed white pixel) is available , then step number
+#increases by 1
     if d1 == 25:
-        global add
+        global add #if no path available in any direction
         add = 10
 k = 0
 while add == 5:
     k = k + 1
-    step(k)
+    step(k) #traversing step by step
 
-print(k)
-print(img1[a][b])
 cv2.namedWindow('NewImage', cv2.WINDOW_NORMAL)
+##window for display of path
 
-p = img1[c][d]
-#img2[c][d] = 0
+p = img1[c][d] #last step number
+
+#path1 function retraces the shortest path
 def path1(r,s,p):
     global c
     global d
@@ -130,9 +135,10 @@ def path1(r,s,p):
         d = s-1
         cv2.imshow('NewImage', img)
         cv2.waitKey(100)
+#for each step , if any neighbour is available with previous step value, then we get the path
 while p>1:
     path1(c,d,p)
-    p = p-1
+    p = p-1 #when step number 1 is reached, we get the entire shortest path
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
