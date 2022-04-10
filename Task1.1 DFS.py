@@ -91,10 +91,10 @@ def dfs(i,j):
             img[stack1.pop(),stack2.pop()]=200
             cv2.imshow('Image', img)
             cv2.waitKey(50)
+        cv2.waitKey(0)
         exit()
             
 begin=time.time()
 dfs(m,n)
 
-cv2.waitKey(0)
 cv2.destroyAllWindows
