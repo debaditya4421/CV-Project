@@ -35,28 +35,27 @@ while(n<2):
 m=i         #taking the second grey pixel formed to be the starting point
 n=j
 print(m,n)
-img[m,n]=200
+img[m,n]=200        #setting the starting pixel to value 200 initially to avoid it being mistaken for final pixel
 x,y=img.shape
 cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
-stack1=deque()
-stack2=deque()
-q=0
+stack1=deque()              #Stack1 is used to store the x component of the pixels
+stack2=deque()              #Stack2 is used to store the y component of the pixels
+
 def dfs(i,j):
-    global q
     if img[i,j]!=128:
-        while(q<1):
-            img[i,j]=127
-            stack1.append(i)
+        while(True):
+            img[i,j]=127            #setting all traversed pixels to value 127 to avoid revisiting
+            stack1.append(i)        #adding the x and y components of the traversed pixels to the stack
             stack2.append(j)
-            cv2.imshow('Image', img)
+            cv2.imshow('Image', img)        
             cv2.waitKey(5)
-            if(j-1)>=0:
-                if(img[i,j-1]==128):
+            if(j-1)>=0:                     #making sure the pixel we are going to check is not out of bounds
+                if(img[i,j-1]==128):        #checking if it is the final pixel
                     print("complete")
+                    dfs(i,j-1)              #If it is the final pixel, we perform dfs on it again since it will move to the else condition then
+                elif(img[i,j-1]==255):      #If it is an untraversed pixel of the path, we perform dfs on it
                     dfs(i,j-1)
-                elif(img[i,j-1]==255):
-                    dfs(i,j-1)
-            if(j+1<y):
+            if(j+1<y):                      #checking other surrounding pixels
                 if(img[i,j+1]==128):
                     print("complete")
                     dfs(i,j+1)
@@ -75,26 +74,23 @@ def dfs(i,j):
                 elif(img[i-1,j]==255):
                     dfs(i-1,j)
             
-            stack1.pop()
-            stack2.pop()
-            print("cant move", j, i)
-            
+            stack1.pop()                        #If we reach a dead end i.e. a pixel surrounded by no white pixel, we consider out path taken to be wrong
+            stack2.pop()                        #We backtrack to the pixel which has untraversed pixels by popping the pixels that belong the wrong path until one of the if conditions is satisfied
             break
     else:
-        q=2
-        print("complete")
-        l=len(stack1)
+        print("complete")                       #The final pixel is reached
+        l=len(stack1)                           #The length of our stack will be equal to the number of pixels in the solution path
         print("distance=", l)
-        end=time.time()
-        print("time=",end-begin)
-        for k in range(l):
+        end=time.time()                         
+        print("time=",end-begin)     
+        for k in range(l):                      #Backtracking to generate the solution path
             img[stack1.pop(),stack2.pop()]=200
             cv2.imshow('Image', img)
             cv2.waitKey(50)
         cv2.waitKey(0)
         exit()
             
-begin=time.time()
+begin=time.time()                               #time shown includes the time delay we have used to show the traversal of pixels
 dfs(m,n)
 
 cv2.destroyAllWindows
